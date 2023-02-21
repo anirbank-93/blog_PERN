@@ -39,8 +39,13 @@ export const createPost = async (req, res) => {
 };
 
 export const getAllPosts = async (req, res) => {
+  let posts;
   try {
-    let posts = await Post.findAll();
+    if (req.query.category) {
+      posts = await Post.findAll({ where: { category: req.query.category } });
+    } else {
+      posts = await Post.findAll();
+    }
 
     // console.log(posts.every((post) => post instanceof Post));
     res
