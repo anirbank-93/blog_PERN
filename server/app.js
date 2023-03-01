@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import logger from 'morgan';
 import path from 'path';
 import fs from 'fs';
-import { fileURLToPath, URL, parse } from 'url';
+import { fileURLToPath } from 'url';
 
 import authRoutes from './app/routes/auth.routes.js';
 import userRoutes from './app/routes/user.routes.js';

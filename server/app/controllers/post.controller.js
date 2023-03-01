@@ -69,3 +69,48 @@ export const getPostById = async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 };
+
+export const updatePost = async (req, res) => {
+  try {
+    var id = req.params.id;
+    console.log(id, 'update by id');
+
+    let post = await Post.findByPk(id);
+
+    if (!post) {
+      res.status(404).json({ error: 'Post not found' });
+    } else {
+      await Post.update(req.body, { where: { id: id } });
+
+      res
+        .status(200)
+        .json({ status: true, message: 'Data updated successfully' });
+    }
+  } catch (err) {
+    console.log(err.message, 'update error');
+    res.status(500).send({ message: err.message });
+  }
+};
+
+export const deletePost = async (req, res) => {
+  try {
+    var id = req.params.id;
+    console.log(id, 'delete by id');
+
+    let post = await Post.findByPk(id);
+    console.log(post);
+
+    if (!post) {
+      res.status(404).json({ error: 'Post not found' });
+    } else {
+      await Post.destroy({ where: { id: id } });
+
+      res
+        .status(200)
+        .json({ status: true, message: 'Data deleted successfully' });
+    }
+  } catch (err) {
+    console.log(err.message, 'delete error');
+    res.status(500).send({ message: err.message });
+  }
+};
