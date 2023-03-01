@@ -1,5 +1,9 @@
 import { verifyToken, catchError } from '../middleware/authJwt.js';
-import { createPost, getAllPosts } from '../controllers/post.controller.js';
+import {
+  createPost,
+  getAllPosts,
+  getPostById,
+} from '../controllers/post.controller.js';
 
 import dotenv from 'dotenv';
 
@@ -16,4 +20,5 @@ export default function (app) {
 
   app.post('/api/posts', [verifyToken], createPost);
   app.get('/api/posts', [verifyToken], getAllPosts);
+  app.get('/api/posts/:id', [verifyToken], getPostById);
 }

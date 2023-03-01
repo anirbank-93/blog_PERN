@@ -39,8 +39,9 @@ export const createPost = async (req, res) => {
 };
 
 export const getAllPosts = async (req, res) => {
-  let posts;
   try {
+    let posts;
+    console.log(req.query.category, 'query');
     if (req.query.category) {
       posts = await Post.findAll({ where: { category: req.query.category } });
     } else {
@@ -51,6 +52,19 @@ export const getAllPosts = async (req, res) => {
     res
       .status(200)
       .json({ status: true, message: 'Data successfully get', data: posts });
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};
+
+export const getPostById = async (req, res) => {
+  try {
+    console.log(req.params.id, 'id');
+    let post = await Post.findByPk(req.params.id);
+
+    res
+      .status(200)
+      .json({ status: true, message: 'Data successfully get', data: post });
   } catch (err) {
     res.status(500).send({ message: err.message });
   }
