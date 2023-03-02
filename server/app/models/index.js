@@ -5,6 +5,7 @@ import config from '../config/db.config.js';
 import userModel from './user.model.js';
 import refreshTokenModel from './refreshToken.model.js';
 import postModel from './post.model.js';
+import commentModel from './comment.model.js';
 
 const SEQUELIZE = new Sequelize(config.DB, config.USER, config.PASSWORD, {
   host: config.HOST,
@@ -26,11 +27,17 @@ db.sequelize = SEQUELIZE;
 db.user = userModel(SEQUELIZE, Sequelize);
 db.refreshToken = refreshTokenModel(SEQUELIZE, Sequelize);
 db.post = postModel(SEQUELIZE, Sequelize);
+db.comment = commentModel(SEQUELIZE, Sequelize);
 
 db.refreshToken.belongsTo(db.user, { foreignKey: 'userId', targetKey: 'id' });
 db.user.hasOne(db.refreshToken, { foreignKey: 'userId', targetKey: 'id' });
 
 db.post.belongsTo(db.user, { foreignKey: 'userId', targetKey: 'id' });
 db.user.hasMany(db.post, { foreignKey: 'userId', targetKey: 'id' });
+
+db.comment.belongsTo(db.user, { foreignKey: 'userId', targetKey: 'id' });
+db.comment.belongsTo(db.post, { foreignKey: 'postId', targetKey: 'id' });
+db.user.hasMany(db.comment, { foreignKey: 'userId', targetKey: 'id' });
+db.post.hasMany(db.comment, { foreignKey: 'postId', targetKey: 'id' });
 
 export default db;

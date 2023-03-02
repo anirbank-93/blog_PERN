@@ -10,6 +10,7 @@ import { fileURLToPath } from 'url';
 import authRoutes from './app/routes/auth.routes.js';
 import userRoutes from './app/routes/user.routes.js';
 import postRoutes from './app/routes/post.routes.js';
+import commentRoutes from './app/routes/comment.routes.js';
 
 dotenv.config();
 
@@ -100,6 +101,7 @@ app.use(
 authRoutes(app);
 userRoutes(app);
 postRoutes(app);
+commentRoutes(app);
 
 const PORT = process.env.PORT || 5000; //** */
 
